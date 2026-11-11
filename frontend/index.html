@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flood evacuation planner</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Flood evacuation planner</h1>
+    <p>Raise the water, close roads or fill shelters. The C++ engine recalculates every route.</p>
+  </div>
+  <a id="dotLink" class="link" href="/api/dot" title="Graphviz file of the current network">Download Graphviz (.dot)</a>
+</header>
+
+<!-- The flood gauge: the one control that drives everything else -->
+<section class="gauge" aria-label="Flood water level">
+  <div class="gauge-head">
+    <label for="level">Flood water level</label>
+    <output id="levelOut">0.0 m</output>
+    <span id="closedInfo" class="muted"></span>
+  </div>
+  <input id="level" type="range" min="0" max="3.5" step="0.1" value="0">
+  <div class="gauge-ticks" aria-hidden="true"><span style="left:0">0 m</span><span style="left:28.57%">1 m</span><span style="left:57.14%">2 m</span><span style="left:85.71%">3 m</span></div>
+  <div class="gauge-buttons">
+    <button id="riseBtn" type="button">Start rising water</button>
+    <button id="resetBtn" type="button" class="quiet">Reset everything</button>
+  </div>
+</section>
+
+<main class="layout">
+  <section class="map-area">
+    <div id="mapWrap" class="map-wrap">
+      <svg id="map" role="img" aria-label="Map of the road network"></svg>
+    </div>
+    <p class="hint">Click a zone or junction to choose where people start. Click a road to close or reopen it. Click a shelter to mark it full or open.</p>
+
+    <div class="toggles">
+      <label><input type="checkbox" id="optNaive" checked> Plain shortest path (ignores floods)</label>
+      <label><input type="checkbox" id="optCritical" checked> Critical junctions</label>
+      <label><input type="checkbox" id="optBottleneck" checked> Bottleneck roads</label>
+    </div>
+
+    <ul class="legend" aria-label="Map legend">
+      <li><span class="sw route"></span>Safe route</li>
+      <li><span class="sw naive"></span>Plain shortest path</li>
+      <li><span class="sw wet"></span>Flooded road (darker = deeper)</li>
+      <li><span class="sw closed"></span>Closed road</li>
+      <li><span class="sw bottle"></span>Bottleneck road</li>
+      <li><span class="sw crit"></span>Critical junction</li>
+    </ul>
+  </section>
+
+  <aside class="panel" aria-live="polite">
+    <section>
+      <h2>Safe route <span id="algoName" class="tag">A*</span></h2>
+      <div class="controls">
+        <label>Start from
+          <select id="startSel"></select>
+        </label>
+        <fieldset>
+          <legend>Algorithm</legend>
+          <label><input type="radio" name="algo" value="astar" checked> A*</label>
+          <label><input type="radio" name="algo" value="dijkstra"> Dijkstra</label>
+        </fieldset>
+      </div>
+      <div id="routeBox"></div>
+    </section>
+
+    <section>
+      <h2>Compared with a plain map app</h2>
+      <div id="naiveBox"></div>
+    </section>
+
+    <section>
+      <h2>Cut off from every shelter <span class="tag">BFS</span></h2>
+      <div id="cutBox"></div>
+    </section>
+
+    <section>
+      <h2>Critical junctions <span class="tag">Tarjan</span></h2>
+      <div id="critBox"></div>
+    </section>
+
+    <section>
+      <h2>People who can get out in one hour <span class="tag">Max-flow</span></h2>
+      <div id="flowBox"></div>
+    </section>
+  </aside>
+</main>
+
+<div id="banner" class="banner" hidden></div>
+<script src="/app.js"></script>
+</body>
+</html>

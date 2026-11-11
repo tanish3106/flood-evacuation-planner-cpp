@@ -1,0 +1,65 @@
+# Sample flood-prone city (coordinates in metres, elevation in metres above a reference level)
+# NODE  id  type  name  x  y  elevation  population  capacity
+#   type: ZONE | JUNCTION | HOSPITAL | SHELTER
+#   population = people to evacuate (ZONE/HOSPITAL), capacity = beds (SHELTER)
+# EDGE  u  v  capacity
+#   capacity = people that can pass along the road per hour (length is computed from the coordinates)
+
+NODE 0  SHELTER   Govt_School_Shelter      120  90   8.0    0  1500
+NODE 1  SHELTER   Community_Hall_Shelter  1060 100  8.0    0  1300
+NODE 2  SHELTER   Stadium_Shelter         640  650  7.0    0  2500
+NODE 3   HOSPITAL  City_Hospital          560   190  4.0  150   0
+NODE 4   ZONE      Green_Park_Colony      270   210  3.0  700   0
+NODE 5   ZONE      Model_Town             830   200  3.2  600   0
+NODE 6   ZONE      Riverside_Colony       400   430  1.6  900   0
+NODE 7   ZONE      Old_Market             720   450  1.9  1000  0
+NODE 8   ZONE      Canal_Basti            190   480  2.0  650   0
+NODE 9   ZONE      Lakshmi_Nagar          950   460  2.4  550   0
+NODE 10  ZONE      University_Campus      930   590  2.8  500   0
+NODE 11  JUNCTION  North_Chowk            420   100  4.5  0     0
+NODE 12  JUNCTION  NE_Chowk               760   90   4.5  0     0
+NODE 13  JUNCTION  West_Junction          130   300  3.4  0     0
+NODE 14  JUNCTION  West_Crossing          330   340  2.4  0     0
+NODE 15  JUNCTION  Central_Crossing       580   345  1.2  0     0
+NODE 16  JUNCTION  East_Crossing          860   340  1.6  0     0
+NODE 17  JUNCTION  SW_Chowk               330   560  2.2  0     0
+NODE 18  JUNCTION  South_Chowk            520   560  1.0  0     0
+NODE 19  JUNCTION  East_Chowk             1040  330  2.8  0     0
+NODE 20  JUNCTION  Central_Square         590   260  3.0  0     0
+
+# north side
+EDGE 0  11 900
+EDGE 0  13 800
+EDGE 11 4  600
+EDGE 11 3  500
+EDGE 4  13 500
+EDGE 4  14 500
+EDGE 3  20 600
+EDGE 3  12 500
+EDGE 12 1  700
+EDGE 12 5  500
+EDGE 20 5  400
+EDGE 20 15 600
+EDGE 5  16 500
+EDGE 5  19 400
+EDGE 19 1  400
+# crossings in the middle
+EDGE 14 6  500
+EDGE 15 6  500
+EDGE 15 7  600
+EDGE 16 15 500
+EDGE 16 7  500
+EDGE 16 9  400
+EDGE 16 19 400
+EDGE 19 9  400
+EDGE 14 8  400
+# south side
+EDGE 6  8  400
+EDGE 6  18 500
+EDGE 8  17 400
+EDGE 8  13 300
+EDGE 17 18 500
+EDGE 18 2  800
+EDGE 7  18 500
+EDGE 9  10 400
+EDGE 10 2  600
